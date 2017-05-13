@@ -1,5 +1,7 @@
 from jinja2 import StrictUndefined
-from flask import Flask, jsonify, render_template, request, flash, redirect
+from flask import Flask, jsonify, render_template, request, flash, redirect, session
+from model import db, User #model is in current directory
+import hashlib #Hashing Library
 
 app = Flask(__name__)
 
@@ -11,16 +13,57 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-    """Homepage."""
+    """homepage."""
     return render_template("homepage.html")
 
+@app.route('/signup')
+def signup():
+    """homepage."""
+    return render_template("signup.html")
 
-@app.route('/login', methods=["POST"])
+@app.route('/signup-form', methods=["POST"])
+def sign_up():
+    """Sign form processing"""
+    email = request.form.get("email").lower() #to sanitize
+    password = request.form.get("password")
+
+    try:
+        user = db.session.query(User).filter(username=username).one()
+        user_password = user.password
+        # Hash the password from login form
+        hashed_password = hashlib.md5()
+        hashed_password.update(password) 
+
+        if hashed_password == user_password:
+            session['user'] = email
+            flash("Logged in successfully!")
+        else:
+            flash("Password doesn't match! Please try again!")
+    except :
+        flash("Email doesn't exist, please try agin!")
+
+    return render_template("homepage.html")
+
+@app.route('/signin', methods=["POST"])
 def login():
     """login form processing"""
-    username = request.form.get("username")
+    email = request.form.get("email").lower() #to sanitize
     password = request.form.get("password")
-    
+
+    try:
+        user = db.session.query(User).filter(username=username).one()
+        user_password = user.password
+        # Hash the password from login form
+        hashed_password = hashlib.md5()
+        hashed_password.update(password) 
+
+        if hashed_password == user_password:
+            session['user'] = email
+            flash("Logged in successfully!")
+        else:
+            flash("Password doesn't match! Please try again!")
+    except :
+        flash("Email doesn't exist, please try agin!")
 
     return render_template("homepage.html")
 
