@@ -2,10 +2,12 @@
 Simple App to test two-factor authentication
 ============================================
 
-This application was created to implement the two-factor authentication for Twilio API Authy library.
+This application was created to implement the two-factor authentication for Twilio API Authy library. It used Flask framework in Python for the backend along with PostgreSQL database. For the frontend, it uses HTML5 along with CSS3/Bootstrap.
 
 IMPORTANT NOTES
 ---------------
+
+- If you want to try this application online, it is available on http://test-two-factor-authentication.herokuapp.com/ 
 
 - This application creates a Postgres database in your machine, so you need to have Postgres installed locally in order to run it.
 
