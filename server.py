@@ -122,4 +122,4 @@ if __name__ == "__main__":
     db.create_all(app=app)
 
     PORT = int(os.environ.get("PORT", 5001))
-    app.run(host="0.0.0.0", port=PORT
+    app.run(host="0.0.0.0", port=PORT)
