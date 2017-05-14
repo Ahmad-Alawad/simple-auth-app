@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
 SECRET_KEY = os.environ.get("FLASK_SECRET_KEY", "ABCDEF")
+secret_key = "ABCDEF"
 authy_api = AuthyApiClient('MKBWUpWqL8CxUCTlXEUtCQnD6jPugvH9')
 
 # app.jinja_env.undefined = StrictUndefined
@@ -27,7 +28,7 @@ def signup_form():
 
     hashed_password = hashlib.md5()
     hashed_password.update(password)
-    hashed_password = hashed_password.digest()
+    hashed_password = str(hashed_password.digest())
 
     # Create a user with email and password (hashed).
     user = User(email=email, password=hashed_password)
