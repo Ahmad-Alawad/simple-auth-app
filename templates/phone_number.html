@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <br>
+    <form class="col-xs-4 col-xs-offset-4" action="/phone-number-processing" method="POST">
+        <div class="form-group">
+            <label >please enter your phone number</label>
+            <input type="text" class="form-control" id="phone" placeholder="xxx-xxx-xxxx" name="phonenumber" required>
+        </div>
+        <button type="submit" class="btn btn-default col-xs-4 col-xs-offset-4">Send Code</button>
+    </form>
+
+{% endblock %}

@@ -2,11 +2,13 @@
 from flask import Flask, jsonify, render_template, request, flash, redirect, session
 from model import db, User, connect_to_db #model is in current directory
 import hashlib #Hashing Library
+from authy.api import AuthyApiClient
 
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
+authy_api = AuthyApiClient('MKBWUpWqL8CxUCTlXEUtCQnD6jPugvH9')
 
 # app.jinja_env.undefined = StrictUndefined
 
@@ -18,7 +20,7 @@ def index():
 
 @app.route('/signup')
 def signup():
-    """homepage."""
+    """Sign up page."""
     return render_template("signup.html")
 
 @app.route('/signup-form', methods=["POST"])
@@ -59,13 +61,61 @@ def login():
         hashed_password.update(password) 
         hashed_password = hashed_password.digest()
         if user_password.encode('utf-8') == hashed_password.decode('unicode_escape').encode('utf-8'):
-            session['user'] = email
-            flash("Logged in successfully!")
+            session['email'] = email
+            return redirect('/phone-number')
+            # sms = authy_api.users.request_sms('authy_id', {'force':True})
+            # verification = authy_api.tokens.verify('41771364', '3300218')
+            # user = authy_api.users.get(email)
         else:
             flash("Password doesn't match! Please try again!")
     except:
         flash("Email doesn't exist, please try agin!")
 
+    return render_template("homepage.html")
+
+@app.route('/phone-number')
+def phone_number():
+    """Enter phone number"""
+    return render_template("phone_number.html")
+
+
+
+@app.route('/phone-number-processing', methods=["POST"])
+def phone_number_processing():
+    """Phone number form processing"""
+    phone_number = request.form.get("phonenumber")
+    email = session['email']
+    user = authy_api.users.create(email,phone_number,1)
+    # import pdb; pdb.set_trace()
+    if user.ok():
+        authy_id = user.id
+        sms = authy_api.users.request_sms(authy_id, {'force':True})
+        session['authy_id'] = authy_id
+        return redirect('/authy')      
+    else:
+        flash('Please try again!!!!')
+        return redirect('/')
+    
+
+@app.route('/authy')
+def authy():
+    """Authy page."""
+    return render_template("authy.html")
+
+
+@app.route('/authy-verify', methods=["POST"])
+def authy_verify():
+    """Authy processing"""
+    
+    authycode = request.form.get("authycode")
+    email = session['email']
+    user_id = session['authy_id']
+    verification = authy_api.tokens.verify(user_id, authycode)
+    if verification.ok():
+        flash("Logged in successfully!")
+    else:
+        flash("Verification code is not correct!")
+    
     return render_template("homepage.html")
 
 
