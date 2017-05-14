@@ -13,11 +13,13 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=False)
 
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri=None):
+    """Connect our application to our database."""
+
     app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgres:///simpleauthappdb'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
+
 
 
 if __name__ == "__main__":
