@@ -116,8 +116,10 @@ if __name__ == "__main__":
     app.debug = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # make sure templates, etc. are not cached in debug mode
-    app.jinja_env.auto_reload = app.debug 
+    # app.jinja_env.auto_reload = app.debug 
     connect_to_db(app, os.environ.get("DATABASE_URL"))
+
+    db.create_all(app=app)
 
     PORT = int(os.environ.get("PORT", 5001))
     app.run(host="0.0.0.0", port=PORT
