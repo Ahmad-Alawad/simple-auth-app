@@ -7,7 +7,7 @@ from authy.api import AuthyApiClient
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
-app.secret_key = "ABC"
+SECRET_KEY = os.environ.get("FLASK_SECRET_KEY", "ABCDEF")
 authy_api = AuthyApiClient('MKBWUpWqL8CxUCTlXEUtCQnD6jPugvH9')
 
 # app.jinja_env.undefined = StrictUndefined
@@ -116,7 +116,8 @@ if __name__ == "__main__":
     app.debug = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # make sure templates, etc. are not cached in debug mode
-    app.jinja_env.auto_reload = app.debug  
-    connect_to_db(app)
+    app.jinja_env.auto_reload = app.debug 
+    connect_to_db(app, os.environ.get("DATABASE_URL"))
 
-    app.run(port=5001, host='0.0.0.0')
+    PORT = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=PORT

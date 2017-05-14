@@ -14,7 +14,7 @@ class User(db.Model):
 
 
 def connect_to_db(app):
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///simpleauthappdb'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgres:///simpleauthappdb'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
