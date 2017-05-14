@@ -3,6 +3,7 @@ from flask import Flask, jsonify, render_template, request, flash, redirect, ses
 from model import db, User, connect_to_db #model is in current directory
 import hashlib #Hashing Library
 from authy.api import AuthyApiClient
+import os
 
 app = Flask(__name__)
 
