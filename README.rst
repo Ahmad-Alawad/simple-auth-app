@@ -7,9 +7,7 @@ This application was created to implement the two-factor authentication for Twil
 IMPORTANT NOTES
 ---------------
 
-- In case you just want to see how it works, this application is deployed on Heruko. You can view it by clicking on this link ..........
-
-- This application creates a Postgres database in your machine, so you need to have Postgres installed locally in order to run it. Otherwise, open the link of the deployed application in your broswer.
+- This application creates a Postgres database in your machine, so you need to have Postgres installed locally in order to run it.
 
 Getting Started
 ---------------
@@ -40,7 +38,7 @@ Open the application in your browser::
 Using the Application
 ---------------------
 
-After you open the application, weather you run it on your machine or opened the deployed version, you can try it following these steps:
+After you open the application in your broswer, you can try it following these steps:
 
 - In the home page, you first need to sign up as a new user. After signing up, the application directs you back to homepage to sign in.
 

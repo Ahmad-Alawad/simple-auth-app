@@ -28,7 +28,7 @@ def signup_form():
 
     hashed_password = hashlib.md5()
     hashed_password.update(password)
-    hashed_password = str(hashed_password.digest())
+    hashed_password = hashed_password.digest()
 
     # Create a user with email and password (hashed).
     user = User(email=email, password=hashed_password)
