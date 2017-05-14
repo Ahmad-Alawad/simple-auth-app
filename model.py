@@ -9,8 +9,8 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    email = db.Column(db.String(150), primary_key=True, nullable=False)
-    password = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(64), primary_key=True, nullable=False)
+    password = db.Column(db.String(64), nullable=False)
 
 
 def connect_to_db(app):
