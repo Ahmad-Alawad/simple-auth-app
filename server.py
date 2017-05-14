@@ -18,11 +18,6 @@ def index():
     """homepage."""
     return render_template("homepage.html")
 
-# @app.route('/signup')
-# def signup():
-#     """Sign up page."""
-#     return render_template("signup.html")
-
 @app.route('/signup-form', methods=["POST"])
 def signup_form():
     """Sign Up form processing"""
@@ -81,8 +76,9 @@ def phone_number():
 def phone_number_processing():
     """Phone number form processing"""
     phone_number = request.form.get("phonenumber")
+    country_code = request.form.get("countrycode")
     email = session['email']
-    user = authy_api.users.create(email,phone_number,1)
+    user = authy_api.users.create(email,phone_number,country_code)
     # import pdb; pdb.set_trace()
     if user.ok():
         authy_id = user.id
