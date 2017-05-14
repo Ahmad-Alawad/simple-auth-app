@@ -63,9 +63,6 @@ def login():
         if user_password.encode('utf-8') == hashed_password.decode('unicode_escape').encode('utf-8'):
             session['email'] = email
             return redirect('/phone-number')
-            # sms = authy_api.users.request_sms('authy_id', {'force':True})
-            # verification = authy_api.tokens.verify('41771364', '3300218')
-            # user = authy_api.users.get(email)
         else:
             flash("Password doesn't match! Please try again!")
     except:
