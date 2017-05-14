@@ -28,7 +28,7 @@ def signup_form():
 
     hashed_password = hashlib.md5()
     hashed_password.update(password)
-    hashed_password = hashed_password.digest()
+    hashed_password = repr(hashed_password.digest())
 
     # Create a user with email and password (hashed).
     user = User(email=email, password=hashed_password)
@@ -56,8 +56,9 @@ def login():
         # Hash the password from login form
         hashed_password = hashlib.md5()
         hashed_password.update(password) 
-        hashed_password = hashed_password.digest()
-        if user_password.encode('utf-8') == hashed_password.decode('unicode_escape').encode('utf-8'):
+        hashed_password = repr(hashed_password.digest())
+        # import pdb; pdb.set_trace()
+        if user_password == hashed_password:
             session['email'] = email
             return redirect('/phone-number')
         else:
