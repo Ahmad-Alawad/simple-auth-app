@@ -8,8 +8,8 @@ import os
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
+app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY", "abcdef")
 SECRET_KEY = os.environ.get("FLASK_SECRET_KEY", "ABCDEF")
-secret_key = "ABCDEF"
 authy_api = AuthyApiClient('MKBWUpWqL8CxUCTlXEUtCQnD6jPugvH9')
 
 # app.jinja_env.undefined = StrictUndefined
