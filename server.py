@@ -18,10 +18,10 @@ def index():
     """homepage."""
     return render_template("homepage.html")
 
-@app.route('/signup')
-def signup():
-    """Sign up page."""
-    return render_template("signup.html")
+# @app.route('/signup')
+# def signup():
+#     """Sign up page."""
+#     return render_template("signup.html")
 
 @app.route('/signup-form', methods=["POST"])
 def signup_form():
@@ -68,7 +68,7 @@ def login():
     except:
         flash("Email doesn't exist, please try agin!")
 
-    return render_template("homepage.html")
+    return redirect("/")
 
 @app.route('/phone-number')
 def phone_number():
@@ -113,7 +113,7 @@ def authy_verify():
     else:
         flash("Verification code is not correct!")
     
-    return render_template("homepage.html")
+    return redirect("/")
 
 
 if __name__ == "__main__":
