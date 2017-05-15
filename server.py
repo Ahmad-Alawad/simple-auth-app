@@ -26,19 +26,26 @@ def signup_form():
     email = request.form.get("email").lower() #to sanitize
     password = request.form.get("password")
 
-    hashed_password = hashlib.md5()
-    hashed_password.update(password)
-    hashed_password = repr(hashed_password.digest())
+    user = db.session.query(User).filter_by(email=email).all()
+    if not user:
+        hashed_password = hashlib.md5()
+        hashed_password.update(password)
+        hashed_password = repr(hashed_password.digest())
 
-    # Create a user with email and password (hashed).
-    user = User(email=email, password=hashed_password)
+        # Create a user with email and password (hashed).
+        user = User(email=email, password=hashed_password)
 
-    # Add the user to database.
-    db.session.add(user)
-    db.session.commit()
-    flash("You Signed Up Successfully! Please Sign In")
+        # Add the user to database.
+        db.session.add(user)
+        db.session.commit()
+        flash("You Signed Up Successfully! Please Sign In")
 
-    return redirect("/")
+        return redirect("/")
+
+    else:
+
+        flash("You already signed up. Please sign in!")
+        return redirect("/")
 
 
 @app.route('/signin', methods=["POST"])
@@ -123,6 +130,7 @@ if __name__ == "__main__":
     connect_to_db(app, os.environ.get("DATABASE_URL"))
 
     db.create_all(app=app)
+    DEBUG = "NO_DEBUG" not in os.environ
 
     PORT = int(os.environ.get("PORT", 5001))
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host="0.0.0.0", port=PORT, debug=DEBUG)
