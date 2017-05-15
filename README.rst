@@ -46,7 +46,7 @@ After you open the application in your broswer, you can try it following these s
 
 - Enter your email and password you used to sign up, and click "Sign In".
 
-- The application will take you to the first authentication page, enter your phone number and country code (971 for UAE, 1 for USA, ....) the click "Send Code". 
+- The application will take you to the first authentication page, enter your phone number and country code (1 for USA, 61 for Australia, 971 for UAE, etc.) the click "Send Code". 
 
 - The application will take you to the authentication page.
 
